@@ -14,6 +14,7 @@ RUN go build -o ./bin/app ./src
 FROM golang:1.18 
 
 COPY --from=builder /app/bin/app /
+COPY ./server-config.json /
 
 EXPOSE 8080
 
