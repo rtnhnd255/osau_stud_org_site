@@ -1,0 +1,3 @@
+{
+    "db_url": "postgresql://admin:roflrofl1337@localhost:5432/squadDB"
+}

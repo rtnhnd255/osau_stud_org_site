@@ -1,9 +1,14 @@
 package server
 
-import "net/http"
+import (
+	"io"
+	"log"
+	"net/http"
+)
 
 func (s *Server) homeHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("hello, world"))
+		log.Print("/ route handling")
+		io.WriteString(w, "Hello")
 	}
 }

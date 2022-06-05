@@ -1,0 +1,51 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:14.2
+    environment:
+      POSTGRES_DB: "squadDB"
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "roflrofl1337"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - ../2. Init Database:/docker-entrypoint-initdb.d
+      - .:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U admin -d squadDB" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    ports:
+      - "5342:5342"
+    restart: unless-stopped
+    networks:
+      - postgres
+      - app
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "rtn.hnd.256@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "lol123"
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    volumes:
+      - ./pgadmin:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    restart: unless-stopped
+    networks:
+      - postgres
+    depends_on:
+      - postgres
+  app:
+    build: .
+    networks:
+      - app
+    depends_on:
+      - postgres
+networks:
+  postgres:
+    driver: bridge
+  app:
+    driver: bridge

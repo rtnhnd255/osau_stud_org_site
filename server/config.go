@@ -3,13 +3,16 @@ package server
 import (
 	"encoding/json"
 	"os"
+
+	"github.com/rtnhnd255/osau_stud_org_site.git/storage"
 )
 
 type Config struct {
-	Port string `json:"port"`
+	Addr  string `json:"port"`
+	Store *storage.Config
 }
 
-func NewConfig(path string) (*Config, error) {
+func NewConfig(path string, store *storage.Config) (*Config, error) {
 	var c Config
 	cfgFile, err := os.Open(path)
 	if err != nil {
@@ -18,5 +21,6 @@ func NewConfig(path string) (*Config, error) {
 
 	jsonParser := json.NewDecoder(cfgFile)
 	jsonParser.Decode(&c)
+	c.Store = store
 	return &c, nil
 }

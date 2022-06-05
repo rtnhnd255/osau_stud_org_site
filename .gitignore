@@ -1,2 +1,4 @@
 .vscode
-Makefile
+/bin/app.exe
+/pgadmin
+/pgdata
