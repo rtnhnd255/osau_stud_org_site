@@ -7,6 +7,8 @@ COPY go.sum /app/
 
 COPY ./app /app/
 
+
+RUN go mod tidy
 RUN go mod download
 
 RUN go build -o ./bin/app ./src
